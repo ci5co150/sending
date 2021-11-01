@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<head>
+<style>
+table, td {
+	border: solid black 1px;
+	border-collapse:collapse;
+}
+</style>
+<script>
+var a = new Array();
+var a_str;
+var arr = [5,10,20,30,50];
+function generateArr(){
+
+     createTable(arr);
+}
+function createTable(){
+     let size = arr.length;
+     console.log(arr);
+     console.log("size: ", arr.length);
+     let myTable = document.getElementById("table01");
+     let table = document.createElement('table');
+     let tbody = document.createElement('tbody');
+
+     table.appendChild(tbody);
+     
+     for( var i = 0; i < size; i++){
+     	     let tr = document.createElement('tr');
+	     let str = '<tr><input type="text" name="v' + i + '"id="v' + i + '"></tr>';
+     	     tr.innerHTML= str;
+	     tr.value = arr[i];
+	     tbody.appendChild(tr);
+	     console.log(i);
+     }
+     
+     myTable.appendChild(table);
+     console.log(a);
+}
+function getData(){
+	for( var i = 0; i < arr.length; i++){
+		a[i] = document.getElementById("v" + i).value;
+	}
+	a_str=JSON.stringify(a);
+	console.log(a);
+	console.log(a_str);
+	sendArrayPost();
+}
+function sendArrayPost(){
+	h =  new XMLHttpRequest();
+	h.open('POST', 'page1.php');
+	h.onreadystatechange = function() { // Call a function when the state changes.
+		if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+			            // Request finished. Do processing here.
+		}
+	}
+	h.send('a=','a_str');
+}
+
+</script>
+</head>
+<body>
+</body>
+<div id="table01"></div>
+<button id="ok" onClick="getData()">ok</button>
+<button id="Gent" onClick="generateArr()">Generate</button>
+</html>
