@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<style>
+body{
+	background-image:url('https://solarsystem.nasa.gov/assets/footer_bg.jpg');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+.center {
+	margin-left: auto;
+        margin-right: auto;
+}
+.rightPading{
+	padding-right: 25px;
+}
+.textCenter{
+	color:white;
+	text-align: center;
+}
+
+.image{
+	text-align: center;
+}
+img{
+	width:35%;
+	height:auto;
+}
+
+table, td {
+	color: white;
+	margin-left: auto;
+        margin-right: auto;
+	border: 1px solid white;
+	border-collapse:collapse;
+	font-size: 25px;
+	width: 75%;
+	table-layout:fized;
+	}
+</style>
+</head>
+<body>
+
+<h1 class="textCenter" >Planets</h1>
+<div id="id011"></div>
+<div id="divTable"></div>
+<div class="image">
+<img id="Photo" src="">
+<div class="textCenter" id="buttons">
+<button id="first">First</button>
+<button id="myBtn">Prev</button>
+<button id="myBtn2">Next</button>
+<button id="last">Last</button>
+</div
+<div class="textCenter" id="buttons2">
+<button id="Save" name="save">save</button>
+<button id="edit" name="edit">edit</button>
+<button id="insert" name="insert">insert</button>
+</div>
+<div class="textCenter" id="buttons2">
+<button id="saveAll" name="save all">save all</button>
+<button id="Remove" name="Remove">save all</button>
+</div>
+
+<script>
+//crete table
+function createTable(){
+let mytable = document.getElementById("divTable");
+let table =  document.createElement('table');
+
+let tableBody = document.createElement('TBODY');
+table.appendChild(tableBody)
+
+for(var i = 0; i < 8; i++){
+	let = tr = document.createElement('tr');
+	tr.id = i;
+	tableBody.appendChild(tr);
+
+	for(var j = 0; j < 2; j++){
+	     var td = document.createElement('td');
+	     td.id = "id" + i + j + "";
+	     td.appendChild(document.createTextNode("" + i+ j + ""));
+	     tr.appendChild(td);
+	}
+	mytable.appendChild(table);
+}
+
+}
+
+function setDetails(obj){
+	//console.log(obj);
+	let id = 0;
+	//console.log("details");
+	for (let p in obj){
+		document.getElementById("id" + id + 0 +"").innerHTML = p;
+		id += 1;
+	}
+}
+
+function setData(obj){
+	let id = 0;
+	//console.log("setData");
+	for (let p in obj){
+		document.getElementById("id" + id + 1 +"").innerHTML = obj[p];
+		id += 1;
+	}
+	//console.log(obj);
+	document.getElementById("Photo").src = obj["Image"];
+	//innerHTML = "<img src= " + obj["Image"] + ">";
+}
+
+
+	var request = new XMLHttpRequest();
+	var url = "planets2.json";
+	request.onreadystatechange = function() {
+	  if (this.readyState == 4 && this.status == 200){
+		     
+		      var response = JSON.parse(request.responseText);
+		      myFunction(response);
+		      createTable();
+		      setDetails(response[1]);
+		      setData(response[0]);
+	  }
+};
+	request.open("GET", url, true);
+	request.send();
+/*
+function createTable(){
+	let body = document.getElementById(body);
+	let td = document.appendChil
+	for(var i = 0; i < 7; i++){
+		td.document.
+		for(var j = 0; i < 2; j++){
+		}
+	}
+}
+*/
+function myFunction(arr){
+	var i = 0;
+	let last = arr.length - 1;
+	document.getElementById("first").addEventListener("click", function() {
+		i = 0;
+		 setData(arr[0]);
+
+	});
+	document.getElementById("myBtn").addEventListener("click", function() {
+		if(i > 0){
+		i = i - 1;
+		console.log(i);
+		setData(arr[i]);//document.getElementById("id01").innerHTML = arr[i];
+		}
+
+	});
+	document.getElementById("myBtn2").addEventListener("click", function() {
+		if(i < 7){
+		 i = i + 1;
+		 setData(arr[i]);
+		}
+
+	});
+	document.getElementById("last").addEventListener("click", function() {
+		i = last;
+       // 	console.log(arr[last]);
+		setData(arr[last]);
+
+	});
+
+}
+</script>
+</body>
+</html>
+
+
